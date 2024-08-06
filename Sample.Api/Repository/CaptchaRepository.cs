@@ -6,8 +6,12 @@ namespace Sample.Api.Repository;
 public class CaptchaRepository: ICaptchaRepository
 {
     private readonly IDistributedCache _cache;
-    
-    public async Task<string> GetCaptcha(Guid guid)
+    public CaptchaRepository(IDistributedCache cache)
+    {
+        _cache = cache;
+    }
+
+    public async Task<string> GetCaptcha(string guid)
     {
         var captcha = await _cache.GetStringAsync(guid.ToString());
 
@@ -16,9 +20,10 @@ public class CaptchaRepository: ICaptchaRepository
 
         return captcha;
     }
-    public async Task InsertCaptcha(Captcha captcha)
+    public async Task<string> InsertCaptcha(Captcha captcha)
     {
         await _cache.SetStringAsync(captcha.CaptchaKey.ToString(), captcha.CaptchaValue);
+        return captcha.CaptchaKey.ToString();
     }
 }
 

@@ -4,6 +4,6 @@ namespace Sample.Api.Repository;
 
 public interface ICaptchaRepository
 {
-    Task InsertCaptcha(Captcha captcha);
-    Task<string> GetCaptcha(Guid guid);
+    Task<string> InsertCaptcha(Captcha captcha);
+    Task<string> GetCaptcha(string guid);
 }

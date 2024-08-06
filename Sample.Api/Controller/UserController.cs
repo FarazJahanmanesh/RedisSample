@@ -16,7 +16,8 @@ public class UserController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetCaptcha()
     {
-        await _repository.InsertCaptcha(new Entities.Captcha { CaptchaKey = Guid.NewGuid() ,CaptchaValue ="ffff"});
-        return Ok();
+        var key = await _repository.InsertCaptcha(new Entities.Captcha { CaptchaKey = Guid.NewGuid() ,CaptchaValue ="ffff"});
+        var captcha = await _repository.GetCaptcha(key);
+        return Ok(captcha);
     }
 }
